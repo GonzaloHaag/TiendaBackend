@@ -59,7 +59,10 @@ async function pago() {
 function displayProducts() {
   /*Recorro el array y los muestro, estan en el backend*/
     let productsHTML = '';
-    productList.forEach(producto => {
+    console.log(productList);
+
+    productList?.forEach(producto => {
+
 
       let buttonHtml = `<button class="button-add" onclick="add(${producto.id}, ${producto.price})">Agregar</button>`;
 
@@ -82,16 +85,21 @@ function displayProducts() {
 async function fetchProducts() {
    //Apenas se cargue la ventana, quiero esto
   //Cuando se cargue la pagina la variable productList ya tendra cosas
-  productList = await (await fetch("/api/products")).json();
-  //console.log(productList);
+  productList  = await fetch("http://localhost:3000/api/products").then((res)=>res.json());
+  console.log(productList);
   displayProducts();
+
+  // productList = await fetch("/api/products").then((res)=>{
+  //   res.json();
+  // });
+  // displayProducts(productList);
 }
 
 
 
 window.onload = async() => {
 
-  await fetchProducts();
+  await fetchProducts(productList);
 
 }
 

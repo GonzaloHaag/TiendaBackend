@@ -16,8 +16,10 @@ app.get("/api/products", async (req, res) => {
  la base de datos
  */
 
-
-  res.send(repository.obtenerTabla());
+  //res.send(products);
+  const productsBD = await repository.obtenerTabla();
+  console.log(productsBD);
+  res.send(productsBD); //Me llegan los productos de la base de datos
 
 
 });
@@ -81,8 +83,8 @@ app.post("/api/pago", async (req,res) => {
 
  //Control de stock de mis productos
  const ids = req.body;
- let copyProducts = products.map((p)=>({...p}));//Copia del array products
-
+//  let copyProducts = products.map((p)=>({...p}));//Copia del array products
+ const copyProducts = await repository.obtenerTabla();
 
  //COPIA DE LOS PRODUCTOS, POR SI DOS PERSONAS ESTAN COMPRANDO AL MISMO TIEMPO
 let error = false;
@@ -111,10 +113,11 @@ if(error) {
   res.send("Sin stock").statusCode(400);
 }
 else {
- const response = await mercadopago.preferences.create(preference);
-const preferenceId = response.body.id;
- products = copyProducts;
- res.send({preferenceId});
+//  const response = await mercadopago.preferences.create(preference);
+// const preferenceId = response.body.id;
+//  products = copyProducts;
+//  res.send({preferenceId});
+ res.send(copyProducts);
 }
 
  });

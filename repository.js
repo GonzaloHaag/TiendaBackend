@@ -18,23 +18,16 @@ const obtenerTabla = async() => { //Esta funcion esta bien, representa al read d
   const respuesta = await client.query("SELECT * FROM productos");
   const resultado = respuesta.rows;
 
+ await client.end(); //Cerramos conexion
 
-
-
-
-
-  await client.end(); //Cerramos conexion
 
   return resultado;
+
 };
-obtenerTabla().then(resultado => {
+// obtenerTabla().then(resultado => {
 
-   console.log(resultado);
-})
-
-
-
-
+//    console.log(resultado);
+// })
 
 
 module.exports = {
